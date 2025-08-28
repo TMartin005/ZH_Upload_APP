@@ -1,29 +1,29 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import StudentForm from './components/StudentForm';
-import TeacherForm from './components/TeacherForm';
-import './App.css';
-function App() {
+import StudentPage from './pages/StudentPage';
+import TeacherPage from './pages/TeacherPage';
+
+const App: React.FC = () => {
   return (
     <Router>
-      <div className="App">
-        <h1>Assignment Submission App</h1>
+      <div>
+        <h1>Student Assignment Submission App</h1>
         <Routes>
-          <Route path="/student" element={<StudentForm />} />
-          <Route path="/teacher" element={<TeacherForm />} />
+          <Route path="/student" element={<StudentPage />} />
+          <Route path="/teacher" element={<TeacherPage />} />
           <Route path="/" element={
             <>
-              <h2>Welcome! Please choose your role:</h2>
-              <div>
-                <a href="/student">Student</a>
-                <a href="/teacher">Teacher</a>
-              </div>
+              <h2>Welcome! Please select a page:</h2>
+              <ul>
+                <li><a href="/student">Student Submission</a></li>
+                <li><a href="/teacher">Teacher View</a></li>
+              </ul>
             </>
           } />
         </Routes>
       </div>
     </Router>
   );
-}
+};
 
-
-export default App
+export default App;
