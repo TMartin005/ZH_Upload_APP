@@ -6,34 +6,54 @@ const uploadsDir = path.join(__dirname, '../uploads');
 
 // Function to handle student assignment submission
 exports.submitAssignment = (req, res) => {
-    const { name, neptunCode, assignmentName, wroteCode, aiAcknowledgment } = req.body;
-    const files = req.files;
+    console.log('req.files:', req.files);
+    const { name, neptunCode, assignment } = req.body;
+    const wroteCode = req.body.wroteCode;
+    const aiAcknowledgment = req.body.aiAcknowledgment;
+    const mainFile = req.files?.file;
+    const additionalFile = req.files?.additionalFile;
 
-    if (!name || !neptunCode || !assignmentName || !files || files.length === 0) {
-        return res.status(400).json({ message: 'All fields are required.' });
+    // Log incoming request
+    console.log('Incoming submission:', { name, neptunCode, assignment, mainFile, additionalFile });
+
+    if (!name || !neptunCode || !assignment || !mainFile) {
+        return res.status(400).json({ message: 'All fields are required and file must be uploaded.' });
     }
 
-    const assignmentFolder = path.join(uploadsDir, assignmentName);
-    
+    const assignmentFolder = path.join(uploadsDir, assignment);
+
     // Create assignment folder if it doesn't exist
     if (!fs.existsSync(assignmentFolder)) {
         fs.mkdirSync(assignmentFolder, { recursive: true });
     }
 
     // Generate file names
-    const mainFile = `${name}_${neptunCode}_${assignmentName}${path.extname(files[0].originalname)}`;
-    const additionalFile = files.length > 1 ? `${name}_${neptunCode}_${assignmentName}_${files[1].originalname}` : null;
+    const mainFileName = `${name}_${neptunCode}_${assignment}${path.extname(mainFile.name)}`;
+    const mainFilePath = path.join(assignmentFolder, mainFileName);
 
-    // Move files to the appropriate directory
-    const mainFilePath = path.join(assignmentFolder, mainFile);
-    fs.renameSync(files[0].path, mainFilePath);
+    // Move main file
+    mainFile.mv(mainFilePath, (err) => {
+        if (err) {
+            console.error('Error saving main file:', err);
+            return res.status(500).json({ message: 'Error saving main file.' });
+        }
 
-    if (additionalFile) {
-        const additionalFilePath = path.join(assignmentFolder, additionalFile);
-        fs.renameSync(files[1].path, additionalFilePath);
-    }
-
-    return res.status(200).json({ message: 'Assignment submitted successfully.' });
+        // Move additional file if present
+        if (additionalFile) {
+            const additionalFileName = `${name}_${neptunCode}_${assignment}_${additionalFile.name}`;
+            const additionalFilePath = path.join(assignmentFolder, additionalFileName);
+            additionalFile.mv(additionalFilePath, (err) => {
+                if (err) {
+                    console.error('Error saving additional file:', err);
+                    return res.status(500).json({ message: 'Error saving additional file.' });
+                }
+                return res.status(200).json({ message: 'Assignment submitted successfully.' });
+            });
+        } else {
+            return res.status(200).json({ message: 'Assignment submitted successfully.' });
+        }
+    });
+  
 };
 
 // Function to retrieve the last submission for a student

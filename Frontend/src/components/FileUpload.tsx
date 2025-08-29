@@ -13,25 +13,36 @@ const FileUpload = ({ studentName, neptunCode, assignmentName }: StudentSubmissi
         setAdditionalFile(event.target.files[0]);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!file) return;
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!file) return;
 
-        const formData = new FormData();
-        const fileName = `${studentName}_${neptunCode}_${assignmentName}${additionalFile ? `_${additionalFile.name}` : ''}`;
-        
-        formData.append('file', file, fileName);
-        if (additionalFile) {
-            formData.append('additionalFile', additionalFile, additionalFile.name);
+    const formData = new FormData();
+    const fileName = `${studentName}_${neptunCode}_${assignmentName}${additionalFile ? `_${additionalFile.name}` : ''}`;
+    formData.append('file', file, fileName);
+    if (additionalFile) {
+        formData.append('additionalFile', additionalFile, additionalFile.name);
+    }
+    formData.append('name', studentName);
+    formData.append('neptunCode', neptunCode);
+    formData.append('assignment', assignmentName);
+
+    try {
+        const response = await fetch('http://localhost:3000/api/students/submit', {
+            method: 'POST',
+            body: formData,
+        });
+        if (response.ok) {
+            setUploadSuccess(true);
+        } else {
+            setUploadSuccess(false);
+            alert('Upload failed.');
         }
-
-        // Simulate file upload
-        // In a real application, you would send this to your backend
-        console.log('Uploading files:', fileName);
-        setUploadSuccess(true);
-        // Here you would handle the actual upload logic
-    };
-
+    } catch (error) {
+        setUploadSuccess(false);
+        alert('Error uploading file.');
+    }
+};
     return (
         <div>
             <form onSubmit={handleSubmit}>

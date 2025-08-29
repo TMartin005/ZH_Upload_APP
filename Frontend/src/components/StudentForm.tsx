@@ -9,6 +9,7 @@ const StudentForm = () => {
     const [file, setFile] = useState(null);
     const [additionalFile, setAdditionalFile] = useState(null);
     const [assignments, setAssignments] = useState(['Assignment 1', 'Assignment 2']); // Editable list of assignments
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -18,7 +19,7 @@ const StudentForm = () => {
         setAdditionalFile(event.target.files[0]);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (!name || !neptunCode || !assignment || !selfAuth || !aiAcknowledgment || !file) {
             alert('Please fill in all required fields and upload a file.');
@@ -31,18 +32,36 @@ const StudentForm = () => {
         if (additionalFile) {
             formData.append('additionalFile', additionalFile, additionalFile.name);
         }
+        formData.append('name', name);
+        formData.append('neptunCode', neptunCode);
+        formData.append('assignment', assignment);
+        formData.append('wroteCode', selfAuth ? 'true' : 'false');
+        formData.append('aiAcknowledgment', aiAcknowledgment ? 'true' : 'false');
 
-        // Handle file upload logic here (e.g., save to local storage or server)
-
-        alert('Files submitted successfully!');
-        // Clear form fields after submission
-        setName('');
-        setNeptunCode('');
-        setAssignment('');
-        setSelfAuth(false);
-        setAiAcknowledgment(false);
-        setFile(null);
-        setAdditionalFile(null);
+        try {
+            const response = await fetch('http://192.168.100.26:3000/api/students/submit', {
+                method: 'POST',
+                body: formData,
+            });
+            if (response.ok) {
+                setUploadSuccess(true);
+                // Clear form fields after submission
+                setName('');
+                setNeptunCode('');
+                setAssignment('');
+                setSelfAuth(false);
+                setAiAcknowledgment(false);
+                setFile(null);
+                setAdditionalFile(null);
+            } else {
+                setUploadSuccess(false);
+                const errorData = await response.json();
+                alert(`Upload failed: ${errorData.message}`);
+            }
+        } catch (error) {
+            setUploadSuccess(false);
+            alert('Error uploading file. Please try again.');
+        }
     };
 
     return (
@@ -85,16 +104,17 @@ const StudentForm = () => {
             <div>
                 <label>
                     Upload .c/.cpp file:
-                    <input type="file" accept=".c,.cpp" onChange={handleFileChange} required />
+                    <input type="file" /* accept=".c,.cpp" */ onChange={handleFileChange} required />
                 </label>
             </div>
             <div>
                 <label>
                     Upload additional file (optional):
-                    <input type="file" accept=".csv" onChange={handleAdditionalFileChange} />
+                    <input type="file" /* accept=".csv" */ onChange={handleAdditionalFileChange} />
                 </label>
             </div>
             <button type="submit">Submit</button>
+            {uploadSuccess && <p>Upload successful!</p>}
         </form>
     );
 };

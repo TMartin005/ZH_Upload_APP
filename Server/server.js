@@ -1,15 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.use(express.static('uploads'));
 
 // Routes
