@@ -10,7 +10,11 @@ const StudentForm = () => {
     const [additionalFile, setAdditionalFile] = useState(null);
     const [assignments, setAssignments] = useState(['Assignment 1', 'Assignment 2']); // Editable list of assignments
     const [uploadSuccess, setUploadSuccess] = useState(false);
+    
+    const host = import.meta.env.VITE_HOST;
+    const port = import.meta.env.VITE_PORT;
 
+    
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
     };
@@ -39,7 +43,7 @@ const StudentForm = () => {
         formData.append('aiAcknowledgment', aiAcknowledgment ? 'true' : 'false');
 
         try {
-            const response = await fetch('http://192.168.100.26:3000/api/students/submit', {
+            const response = await fetch(`http://${host}:${port}/api/students/submit`, {
                 method: 'POST',
                 body: formData,
             });
