@@ -36,5 +36,30 @@ exports.getAllSubmissions = (req, res) => {
     });
 };
 exports.getSubmissionByStudent = (req, res) => {
-    res.status(501).json({ message: 'Not implemented yet.' });
+    const { neptun } = req.params;
+    const submissions = [];
+
+    try {
+        const assignments = fs.readdirSync(uploadsDir);
+        assignments.forEach(assignment => {
+            const assignmentPath = path.join(uploadsDir, assignment);
+            const files = fs.readdirSync(assignmentPath);
+            files.forEach(file => {
+                if (file.includes(`_${neptun}_`)) {
+                    submissions.push({
+                        assignment,
+                        fileName: file
+                    });
+                }
+            });
+        });
+
+        if (submissions.length === 0) {
+            return res.status(404).json({ message: 'No submissions found for this student.' });
+        }
+
+        res.status(200).json(submissions);
+    } catch (error) {
+        res.status(500).json({ message: 'Error reading submissions.' });
+    }
 };

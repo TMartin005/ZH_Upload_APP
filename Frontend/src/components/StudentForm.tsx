@@ -11,7 +11,7 @@ const StudentForm = () => {
     const [assignments, setAssignments] = useState(['Assignment 1', 'Assignment 2']); // Editable list of assignments
     const [uploadSuccess, setUploadSuccess] = useState(false);
     
-    const host = import.meta.env.VITE_HOST;
+    const host = import.meta.env.VITE_SERVER;
     const port = import.meta.env.VITE_PORT;
 
     
