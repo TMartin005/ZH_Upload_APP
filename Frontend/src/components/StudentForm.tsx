@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const StudentForm = () => {
     const [name, setName] = useState('');
@@ -10,10 +10,19 @@ const StudentForm = () => {
     const [additionalFile, setAdditionalFile] = useState(null);
     const [assignments, setAssignments] = useState(['Assignment 1', 'Assignment 2']); // Editable list of assignments
     const [uploadSuccess, setUploadSuccess] = useState(false);
-    
-    const host = import.meta.env.VITE_SERVER;
+    const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
+    const host = import.meta.env.VITE_HOST;
     const port = import.meta.env.VITE_PORT;
 
+useEffect(() => {
+    fetch(`http://${host}:${port}/api/zh_types`)
+        .then(res => res.json())
+        .then(data => {
+            setAssignments(data.assignments || []);
+            setActiveAssignments(data.active || []);
+            setAssignment((data.active && data.active[0]) || "");
+        });
+}, []);
     
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -83,16 +92,20 @@ const StudentForm = () => {
                 </label>
             </div>
             <div>
-                <label>
-                    Assignment:
-                    <select value={assignment} onChange={(e) => setAssignment(e.target.value)} required>
-                        <option value="">Select an assignment</option>
-                        {assignments.map((assign, index) => (
-                            <option key={index} value={assign}>{assign}</option>
-                        ))}
-                    </select>
-                </label>
-            </div>
+    <label>
+        Assignment:
+        <select
+            value={assignment}
+            onChange={(e) => setAssignment(e.target.value)}
+            required
+        >
+            <option value="">Select assignment</option>
+            {activeAssignments.map((a) => (
+                <option key={a} value={a}>{a}</option>
+            ))}
+        </select>
+    </label>
+</div>
             <div>
                 <label>
                     <input type="checkbox" checked={selfAuth} onChange={() => setSelfAuth(!selfAuth)} required />

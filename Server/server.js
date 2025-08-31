@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
+const zhRoutes = require('./routes/zh_types');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,6 +18,7 @@ app.use(express.static('uploads'));
 // Routes
 app.use('/api/students', studentRoutes);
 app.use('/api/teachers', teacherRoutes);
+app.use('/api/zh_types', zhRoutes);
 
 // Start the server
 app.listen(PORT, () => {
