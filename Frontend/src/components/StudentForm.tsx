@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-/**
- * Modal component for displaying file content
- */
+// Modal component for displaying file content
 const Modal = ({ content, onClose }) => (
   <div
     style={{
@@ -66,7 +64,7 @@ const StudentForm = () => {
   const [showAdditionalFileModal, setShowAdditionalFileModal] = useState(false);
 
   // Host/port config
-  const host = import.meta.env.VITE_HOST;
+  const host = import.meta.env.VITE_SERVER;
   const port = import.meta.env.VITE_PORT;
 
   // -------------------- Effects --------------------

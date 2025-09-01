@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StudentForm from '../components/StudentForm';
-
+import "./StudentPage.css";
 const StudentPage: React.FC = () => {
     const [lastSubmission, setLastSubmission] = useState<any>(null);
 
@@ -17,20 +17,23 @@ const StudentPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>ZH feltöltés</h1>
-            <StudentForm onSubmit={handleSubmission} />
-            {lastSubmission && (
-                <div>
-                    <h2>Utolsó beadás</h2>
-                    <p>Név: {lastSubmission.name}</p>
-                    <p>Neptun Code: {lastSubmission.neptunCode}</p>
-                    <p>Assignment: {lastSubmission.assignment}</p>
-                    <p>File: {lastSubmission.fileName}</p>
-                </div>
-            )}
+    <div className="center-container">
+      <h1>ZH feltöltés</h1>
+        <div className="form-container">
+          <StudentForm onSubmit={handleSubmission} />
         </div>
-    );
+        {lastSubmission && (
+          <div>
+            <h2>Utolsó beadás</h2>
+            <p>Név: {lastSubmission.name}</p>
+            <p>Neptun Code: {lastSubmission.neptunCode}</p>
+            <p>Assignment: {lastSubmission.assignment}</p>
+            <p>File: {lastSubmission.fileName}</p>
+          </div>
+        )}
+      </div>
+
+  );
 };
 
 export default StudentPage;

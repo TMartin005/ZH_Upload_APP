@@ -7,7 +7,7 @@ const TeacherView: React.FC = () => {
   const [assignments, setAssignments] = useState<string[]>([]);
   const [selectedAssignment, setSelectedAssignment] = useState<string>("");
   const [newAssignment, setNewAssignment] = useState("");
-  const host = import.meta.env.VITE_HOST;
+  const host = import.meta.env.VITE_SERVER;
   const port = import.meta.env.VITE_PORT;
   const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
   const [selectedAssignments, setSelectedAssignments] = useState<string[]>([]);
