@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { StudentSubmission } from "../interfaces/ZH";
+import Modal from "react-modal";
 
 const TeacherView: React.FC = () => {
   const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
@@ -166,8 +167,6 @@ const TeacherView: React.FC = () => {
       )}
       <hr />
       <div>
-        <strong>Active Assignments for Students:</strong>{" "}
-        {activeAssignments.join(", ")}
       </div>
     </div>
   );
