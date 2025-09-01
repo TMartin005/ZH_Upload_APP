@@ -184,7 +184,7 @@ const StudentForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label>
-          Name:
+          Név:
           <input
             type="text"
             value={name}
@@ -195,7 +195,7 @@ const StudentForm = () => {
       </div>
       <div>
         <label>
-          Neptun Code:
+          Neptun Kód:
           <input
             type="text"
             value={neptunCode}
@@ -206,13 +206,13 @@ const StudentForm = () => {
       </div>
       <div>
         <label>
-          Assignment:
+          ZH:
           <select
             value={assignment}
             onChange={(e) => setAssignment(e.target.value)}
             required
           >
-            <option value="">Select assignment</option>
+            <option value="">Válassz ZH-t</option>
             {activeAssignments.map((a) => (
               <option key={a} value={a}>
                 {a}
@@ -229,7 +229,7 @@ const StudentForm = () => {
             onChange={() => setSelfAuth(!selfAuth)}
             required
           />
-          I confirm that I wrote the code myself.
+          Én írtam a kódot.
         </label>
       </div>
       <div>
@@ -240,13 +240,13 @@ const StudentForm = () => {
             onChange={() => setAiAcknowledgment(!aiAcknowledgment)}
             required
           />
-          I acknowledge that if the code seems AI-generated, the assignment
-          might need to be rewritten.
+          Elfogadom, hogy ha a kód AI által generált, akkor a ZH-t
+          újra kell írni.
         </label>
       </div>
       <div>
         <label>
-          Upload .c/.cpp file:
+         .c/.cpp fájl feltöltése:
           <input
             type="file"
             /* accept=".c,.cpp" */
@@ -271,7 +271,7 @@ const StudentForm = () => {
       </div>
       <div>
         <label>
-          Upload additional file (optional):
+          egyéb fájl feltöltése (opcionális):
           <input
             type="file"
             /* accept=".csv" */
@@ -294,7 +294,7 @@ const StudentForm = () => {
         )}
       </div>
       {/* Submit button and upload status */}
-      <button type="submit">Submit</button>
+      <button type="submit">Beadás</button>
       {uploadSuccess && <p>Upload successful!</p>}
     </form>
   );

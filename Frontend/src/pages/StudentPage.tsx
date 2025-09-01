@@ -18,12 +18,12 @@ const StudentPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Student Assignment Submission</h1>
+            <h1>ZH feltöltés</h1>
             <StudentForm onSubmit={handleSubmission} />
             {lastSubmission && (
                 <div>
-                    <h2>Last Submission</h2>
-                    <p>Name: {lastSubmission.name}</p>
+                    <h2>Utolsó beadás</h2>
+                    <p>Név: {lastSubmission.name}</p>
                     <p>Neptun Code: {lastSubmission.neptunCode}</p>
                     <p>Assignment: {lastSubmission.assignment}</p>
                     <p>File: {lastSubmission.fileName}</p>

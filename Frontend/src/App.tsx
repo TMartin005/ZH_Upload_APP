@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
-        <h1>Student Assignment Submission App</h1>
+    
         <Routes>
           <Route path="/student" element={<StudentPage />} />
           <Route path="/teacher" element={<TeacherPage />} />
