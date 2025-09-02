@@ -27,9 +27,18 @@ exports.submitAssignment = (req, res) => {
         fs.mkdirSync(assignmentFolder, { recursive: true });
     }
 
-    // Generate file names
+     // Generate main file name and folder
     const mainFileName = `${name}_${neptunCode}_${assignment}${path.extname(mainFile.name)}`;
-    const mainFilePath = path.join(assignmentFolder, mainFileName);
+    const mainFileBase = path.basename(mainFileName, path.extname(mainFileName));
+    const extraFolder = path.join(assignmentFolder, mainFileBase);
+
+    // Create folder for this submission if it doesn't exist
+    if (!fs.existsSync(extraFolder)) {
+        fs.mkdirSync(extraFolder, { recursive: true });
+    }
+
+    // Path for main file inside its folder
+    const mainFilePath = path.join(extraFolder, mainFileName);
 
     // Move main file
     mainFile.mv(mainFilePath, (err) => {
@@ -40,8 +49,7 @@ exports.submitAssignment = (req, res) => {
 
         // Move additional file if present
         if (additionalFile) {
-            const additionalFileName = `${name}_${neptunCode}_${assignment}_${additionalFile.name}`;
-            const additionalFilePath = path.join(assignmentFolder, additionalFileName);
+            const additionalFilePath = path.join(extraFolder, additionalFile.name);
             additionalFile.mv(additionalFilePath, (err) => {
                 if (err) {
                     console.error('Error saving additional file:', err);
