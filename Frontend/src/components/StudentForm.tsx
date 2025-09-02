@@ -120,180 +120,204 @@ const StudentForm = () => {
   };
 
   // Form submit: validate and upload
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (
-      !name ||
-      !neptunCode ||
-      !assignment ||
-      !selfAuth ||
-      !aiAcknowledgment ||
-      !file
-    ) {
-      alert("Please fill in all required fields and upload a file.");
-      return;
-    }
-
-    const fileName = `${name}_${neptunCode}_${assignment}${
-      additionalFile ? `_${additionalFile.name}` : ""
-    }`;
-    const formData = new FormData();
-    formData.append("file", file, fileName);
-    if (additionalFile) {
-      formData.append("additionalFile", additionalFile, additionalFile.name);
-    }
-    formData.append("name", name);
-    formData.append("neptunCode", neptunCode);
-    formData.append("assignment", assignment);
-    formData.append("wroteCode", selfAuth ? "true" : "false");
-    formData.append("aiAcknowledgment", aiAcknowledgment ? "true" : "false");
-
-    try {
-      const response = await fetch(
-        `http://${host}:${port}/api/students/submit`,
-        {
-          method: "POST",
-          body: formData,
+const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (
+            !name ||
+            !neptunCode ||
+            !assignment ||
+            !selfAuth ||
+            !aiAcknowledgment ||
+            !file
+        ) {
+            alert("Please fill in all required fields and upload a file.");
+            return;
         }
-      );
-      if (response.ok) {
-        setUploadSuccess(true);
-        // Clear form fields after submission
-        setName("");
-        setNeptunCode("");
-        setAssignment("");
-        setSelfAuth(false);
-        setAiAcknowledgment(false);
-        setFile(null);
-        setAdditionalFile(null);
-      } else {
-        setUploadSuccess(false);
-        const errorData = await response.json();
-        alert(`Upload failed: ${errorData.message}`);
-      }
-    } catch (error) {
-      setUploadSuccess(false);
-      alert("Error uploading file. Please try again.");
-    }
-  };
 
-  // -------------------- Render --------------------
-  return (
+        // Use only the main file's extension for its name
+        const mainFileExt = file.name.substring(file.name.lastIndexOf('.'));
+        const fileName = `${name}_${neptunCode}_${assignment}${mainFileExt}`;
+        const formData = new FormData();
+        formData.append("file", file, fileName);
+        if (additionalFile) {
+            formData.append("additionalFile", additionalFile, additionalFile.name);
+        }
+        formData.append("name", name);
+        formData.append("neptunCode", neptunCode);
+        formData.append("assignment", assignment);
+        formData.append("wroteCode", selfAuth ? "true" : "false");
+        formData.append("aiAcknowledgment", aiAcknowledgment ? "true" : "false");
+
+        try {
+            const response = await fetch(
+                `http://${host}:${port}/api/students/submit`,
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+            if (response.ok) {
+                setUploadSuccess(true);
+                // Clear form fields after submission
+                setName("");
+                setNeptunCode("");
+                setAssignment("");
+                setSelfAuth(false);
+                setAiAcknowledgment(false);
+                setFile(null);
+                setAdditionalFile(null);
+            } else {
+                setUploadSuccess(false);
+                const errorData = await response.json();
+                alert(`Upload failed: ${errorData.message}`);
+            }
+        } catch (error) {
+            setUploadSuccess(false);
+            alert("Error uploading file. Please try again.");
+        }
+    };
+
+   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Név:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Neptun Kód:
-          <input
-            type="text"
-            value={neptunCode}
-            onChange={(e) => setNeptunCode(e.target.value)}
-            required
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          ZH:
-          <select
-            value={assignment}
-            onChange={(e) => setAssignment(e.target.value)}
-            required
-          >
-            <option value="">Válassz ZH-t</option>
-            {activeAssignments.map((a) => (
-              <option key={a} value={a}>
-                {a}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={selfAuth}
-            onChange={() => setSelfAuth(!selfAuth)}
-            required
-          />
-          Én írtam a kódot.
-        </label>
-      </div>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={aiAcknowledgment}
-            onChange={() => setAiAcknowledgment(!aiAcknowledgment)}
-            required
-          />
-          Elfogadom, hogy ha a kód AI által generált, akkor a ZH-t
-          újra kell írni.
-        </label>
-      </div>
-      <div>
-        <label>
-         .c/.cpp fájl feltöltése:
-          <input
-            type="file"
-            /* accept=".c,.cpp" */
-            onClick={handleFileClick}
-            onChange={handleFileChange}
-            required
-          />
-        </label>
-        {file && (
-          <div>
-            <span
-              style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-              onClick={() => setShowFileModal(true)}
-            >
-              {file.name}
-            </span>
-          </div>
-        )}
-        {showFileModal && (
-          <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
-        )}
-      </div>
-      <div>
-        <label>
-          egyéb fájl feltöltése (opcionális):
-          <input
-            type="file"
-            /* accept=".csv" */
-            onClick={handleAdditionalFileClick}
-            onChange={handleAdditionalFileChange}
-          />
-        </label>
-        {additionalFile && (
-          <div>
-            <span
-              style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-              onClick={() => setShowAdditionalFileModal(true)}
-            >
-              {additionalFile.name}
-            </span>
-          </div>
-        )}
-        {showAdditionalFileModal && (
-          <Modal content={additionalFileContent} onClose={() => setShowAdditionalFileModal(false)} />
-        )}
-      </div>
-      {/* Submit button and upload status */}
-      <button type="submit">Beadás</button>
-      {uploadSuccess && <p>Upload successful!</p>}
+      <table className="student-form-table">
+        <tbody>
+          <tr>
+            <td>
+              <label htmlFor="name">Név:</label>
+            </td>
+            <td colSpan={2}>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="neptun">Neptun Kód:</label>
+            </td>
+            <td colSpan={2}>
+              <input
+                id="neptun"
+                type="text"
+                value={neptunCode}
+                onChange={(e) => setNeptunCode(e.target.value)}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="assignment">ZH:</label>
+            </td>
+           <td colSpan={2}>
+              <select
+                id="assignment"
+                value={assignment}
+                onChange={(e) => setAssignment(e.target.value)}
+                required
+              >
+                <option value="">Válassz ZH-t</option>
+                {activeAssignments.map((a) => (
+                  <option key={a} value={a}>
+                    {a}
+                  </option>
+                ))}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selfAuth}
+                  onChange={() => setSelfAuth(!selfAuth)}
+                  required
+                />
+                Én írtam a kódot.
+              </label>
+            </td>
+           
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={aiAcknowledgment}
+                  onChange={() => setAiAcknowledgment(!aiAcknowledgment)}
+                  required
+                />
+                Elfogadom, hogy ha a kód AI által generált, akkor a ZH-t újra kell írni.
+              </label>
+            </td>
+           
+          </tr>
+          <tr>
+           <td colSpan={2}>
+              <label>
+                .c/.cpp fájl feltöltése:
+                <input
+                  type="file"
+                  /* accept=".c,.cpp" */
+                  onClick={handleFileClick}
+                  onChange={handleFileChange}
+                  required
+                />
+              </label>
+            </td>
+            <td>
+              {file && (
+                <span
+                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                  onClick={() => setShowFileModal(true)}
+                >
+                  {file.name}
+                </span>
+              )}
+              {showFileModal && (
+                <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              <label>
+                egyéb fájl feltöltése (opcionális):
+                <input
+                  type="file"
+                  /* accept=".csv" */
+                  onClick={handleAdditionalFileClick}
+                  onChange={handleAdditionalFileChange}
+                />
+              </label>
+            </td>
+            <td>
+              {additionalFile && (
+                <span
+                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                  onClick={() => setShowAdditionalFileModal(true)}
+                >
+                  {additionalFile.name}
+                </span>
+              )}
+              {showAdditionalFileModal && (
+                <Modal content={additionalFileContent} onClose={() => setShowAdditionalFileModal(false)} />
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <button type="submit">Beadás</button>
+              {uploadSuccess && <p>Upload successful!</p>}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </form>
   );
 };
