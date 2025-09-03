@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TeacherView from '../components/TeacherView';
-
+import "../pages/TeacherPage.css";
 const TeacherPage: React.FC = () => {
     const [submissions, setSubmissions] = useState([]);
 
@@ -16,7 +16,7 @@ const TeacherPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Student Submissions</h1>
+           
             <TeacherView submissions={submissions} />
         </div>
     );
