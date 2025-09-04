@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TeacherView from '../components/TeacherView';
+import TeacherView from '../components/TeacherForm';
 import "../pages/TeacherPage.css";
 const TeacherPage: React.FC = () => {
     const [submissions, setSubmissions] = useState([]);

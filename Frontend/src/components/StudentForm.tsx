@@ -2,38 +2,13 @@ import React, { useEffect, useState } from "react";
 
 // Modal component for displaying file content
 const Modal = ({ content, onClose }) => (
-  <div
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      background: "rgba(0,0,0,0.5)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 1000,
-    }}
-    onClick={onClose}
-  >
-    <div
-      style={{
-        background: "gray",
-        padding: 24,
-        borderRadius: 8,
-        maxWidth: "80vw",
-        maxHeight: "80vh",
-        overflow: "auto",
-      }}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <pre style={{ whiteSpace: "pre-wrap" }}>{content}</pre>
+  <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <pre>{content}</pre>
       <button onClick={onClose}>Close</button>
     </div>
   </div>
 );
-
 const StudentForm = () => {
   // -------------------- State --------------------
   // Form fields
@@ -272,12 +247,13 @@ const handleSubmit = async (event) => {
             </td>
             <td>
               {file && (
-                <span
-                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                <button
+                  type="button"
+                  style={{ margin: "0 8px" }}
                   onClick={() => setShowFileModal(true)}
                 >
-                  {file.name}
-                </span>
+                  Megtekintés
+                </button>
               )}
               {showFileModal && (
                 <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
@@ -298,18 +274,20 @@ const handleSubmit = async (event) => {
             </td>
             <td>
               {additionalFile && (
-                <span
-                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                <button
+                  type="button"
+                  style={{ margin: "0 8px" }}
                   onClick={() => setShowAdditionalFileModal(true)}
                 >
-                  {additionalFile.name}
-                </span>
+                  Megtekintés
+                </button>
               )}
               {showAdditionalFileModal && (
                 <Modal content={additionalFileContent} onClose={() => setShowAdditionalFileModal(false)} />
               )}
             </td>
           </tr>
+         
           <tr>
             <td colSpan={3}>
               <button type="submit">Beadás</button>
