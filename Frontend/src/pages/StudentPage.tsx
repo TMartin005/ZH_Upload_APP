@@ -28,7 +28,7 @@ const StudentPage: React.FC = () => {
             <p>Név: {lastSubmission.name}</p>
             <p>Neptun Code: {lastSubmission.neptunCode}</p>
             <p>Assignment: {lastSubmission.assignment}</p>
-            <p>Files: {lastSubmission.fileName}</p>
+            <p>File: {lastSubmission.fileName}</p>
           </div>
         )}
       </div>

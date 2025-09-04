@@ -232,61 +232,63 @@ const handleSubmit = async (event) => {
             </td>
            
           </tr>
-          <tr>
-           <td colSpan={2}>
-              <label>
-                .c/.cpp fájl feltöltése:
-                <input
-                  type="file"
-                  /* accept=".c,.cpp" */
-                  onClick={handleFileClick}
-                  onChange={handleFileChange}
-                  required
-                />
-              </label>
-            </td>
-            <td>
-              {file && (
-                <button
-                  type="button"
-                  style={{ margin: "0 8px" }}
-                  onClick={() => setShowFileModal(true)}
-                >
-                  Megtekintés
-                </button>
-              )}
-              {showFileModal && (
-                <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label>
-                egyéb fájl feltöltése (opcionális):
-                <input
-                  type="file"
-                  /* accept=".csv" */
-                  onClick={handleAdditionalFileClick}
-                  onChange={handleAdditionalFileChange}
-                />
-              </label>
-            </td>
-            <td>
-              {additionalFile && (
-                <button
-                  type="button"
-                  style={{ margin: "0 8px" }}
-                  onClick={() => setShowAdditionalFileModal(true)}
-                >
-                  Megtekintés
-                </button>
-              )}
-              {showAdditionalFileModal && (
-                <Modal content={additionalFileContent} onClose={() => setShowAdditionalFileModal(false)} />
-              )}
-            </td>
-          </tr>
+       <tr>
+  <td colSpan={file ? 2 : 3} style={{ textAlign: "center" }}>
+    <label>
+      .c/.cpp fájl feltöltése:
+      <input
+        type="file"
+        onClick={handleFileClick}
+        onChange={handleFileChange}
+        required
+        style={{ display: "inline-block", marginLeft: "8px" }}
+      />
+    </label>
+    {showFileModal && (
+      <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
+    )}
+  </td>
+  {file && (
+    <td className="view-link-cell">
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowFileModal(true);
+        }}
+        className="view-link"
+      >
+        Megtekintés
+      </a>
+    </td>
+  )}
+</tr>
+<tr>
+  <td colSpan={additionalFile ? 2 : 3} style={{ textAlign: "center" }}>
+    <label>
+      egyéb fájl feltöltése (opcionális):
+      <input
+        type="file"
+        onClick={handleAdditionalFileClick}
+        onChange={handleAdditionalFileChange}
+      />
+    </label>
+  </td>
+  {additionalFile && (
+    <td className="view-link-cell">
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowAdditionalFileModal(true);
+        }}
+        className="view-link"
+      >
+        Megtekintés
+      </a>
+    </td>
+  )}
+</tr>
          
           <tr>
             <td colSpan={3}>

@@ -62,7 +62,7 @@ body {
 .student-form-table td[colspan="2"] {
   width: 320px;
   min-width: 220px;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 input[type="text"],
@@ -112,7 +112,25 @@ select:focus {
 .modal-content button {
   margin-top: 16px;
 }
-.student-form-table button {
+button[type="submit"] {
   display: block;
   margin: 0 auto;
+}
+.student-form-table td.no-border-right + td {
+  border-left: none !important;
+
+}.student-form-table td.no-border-right {
+  border-right: none !important;
+}
+
+.view-link-cell {
+  width: 320px;
+  min-width: 320px;
+  text-align: left;
+  padding-right: 16px;
+}
+.view-link {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
 }
