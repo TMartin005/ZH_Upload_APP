@@ -274,20 +274,26 @@ const handleSubmit = async (event) => {
       />
     </label>
   </td>
-  {additionalFile && (
-    <td className="view-link-cell">
-      <a
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          setShowAdditionalFileModal(true);
-        }}
-        className="view-link"
-      >
-        Megtekintés
-      </a>
-    </td>
-  )}
+ {additionalFile && (
+  <td className="view-link-cell">
+    <a
+      href="#"
+      onClick={(e) => {
+        e.preventDefault();
+        setShowAdditionalFileModal(true);
+      }}
+      className="view-link"
+    >
+      Megtekintés
+    </a>
+    {showAdditionalFileModal && (
+      <Modal
+        content={additionalFileContent}
+        onClose={() => setShowAdditionalFileModal(false)}
+      />
+    )}
+  </td>
+)}
 </tr>
          
           <tr>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { StudentSubmission } from "../interfaces/ZH";
 import "../pages/TeacherPage.css"; // Import the CSS
-// Modal component for displaying file content (copied from StudentForm.tsx)
+
 const Modal = ({ content, onClose }) => (
   <div className="modal-overlay" onClick={onClose}>
     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -10,6 +10,7 @@ const Modal = ({ content, onClose }) => (
     </div>
   </div>
 );
+
 const TeacherView: React.FC = () => {
   const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
   const [assignments, setAssignments] = useState<string[]>([]);
@@ -19,10 +20,9 @@ const TeacherView: React.FC = () => {
   const port = import.meta.env.VITE_PORT;
   const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
   const [selectedAssignments, setSelectedAssignments] = useState<string[]>([]);
-    const [modalContent, setModalContent] = useState<string | null>(null);
+  const [modalContent, setModalContent] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Fetch assignments from server
   useEffect(() => {
     fetch(`http://${host}:${port}/api/zh_types`)
       .then((res) => res.json())
@@ -32,6 +32,7 @@ const TeacherView: React.FC = () => {
         setSelectedAssignments(data.active || []);
       });
   }, []);
+
   const handleAddAssignment = async () => {
     if (!newAssignment.trim()) return;
     const updatedAssignments = [...assignments, newAssignment.trim()];
@@ -44,7 +45,6 @@ const TeacherView: React.FC = () => {
       }),
     });
     setNewAssignment("");
-    // Re-fetch assignments and active
     fetch(`http://${host}:${port}/api/zh_types`)
       .then((res) => res.json())
       .then((data) => {
@@ -54,9 +54,12 @@ const TeacherView: React.FC = () => {
       });
   };
 
-  // Fetch submissions
   useEffect(() => {
-    fetch(`http://${host}:${port}/api/teachers/submissions`)
+    fetch(`http://${host}:${port}/api/teachers/submissions`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const flat = Object.entries(data).flatMap(([assignment, files]) =>
@@ -70,7 +73,6 @@ const TeacherView: React.FC = () => {
       });
   }, []);
 
-  // Handle checkbox change
   const handleCheckboxChange = (assignment: string) => {
     setSelectedAssignments((prev) =>
       prev.includes(assignment)
@@ -78,14 +80,13 @@ const TeacherView: React.FC = () => {
         : [...prev, assignment]
     );
   };
-  // Activate selected assignments
+
   const handleActivateAssignments = async () => {
     await fetch(`http://${host}:${port}/api/zh_types`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ assignments, active: selectedAssignments }),
     });
-    // Re-fetch assignments and active
     fetch(`http://${host}:${port}/api/zh_types`)
       .then((res) => res.json())
       .then((data) => {
@@ -95,21 +96,19 @@ const TeacherView: React.FC = () => {
       });
   };
 
-  // Filter submissions by selected assignment
   const filteredSubmissions = submissions.filter(
     (submission) => submission.assignmentName === selectedAssignment
   );
-   // Helper: Check if file is code file (name_code_zh.ext)
+
   const isCodeFile = (submission: StudentSubmission) => {
     const regex = new RegExp(
       `^${submission.studentName}_${submission.neptunCode}_${submission.assignmentName}(\\.c|\\.cpp)?$`
     );
     return regex.test(submission.fileName);
   };
-  // Helper: Fetch file content
+
   const fetchFileContent = async (submission: StudentSubmission) => {
     let fileUrl = `http://${host}:${port}/${submission.assignmentName}/${submission.fileName}`;
-    // If fileName is a folder, fetch file inside with same name
     if (!/\.[^.]+$/.test(submission.fileName)) {
       fileUrl = `http://${host}:${port}/${submission.assignmentName}/${submission.fileName}/${submission.fileName}`;
     }
@@ -125,12 +124,10 @@ const TeacherView: React.FC = () => {
   };
 
   return (
-    
     <div className="teacher-container">
-       <h1>Tanár nézet</h1>
+      <h1>Tanár nézet</h1>
       <div className="teacher-table">
         <div className="teacher-row">
-          {/* Assignment Management Column */}
           <div className="teacher-cell">
             <h2>ZH-k kezelése</h2>
             <input
@@ -164,7 +161,6 @@ const TeacherView: React.FC = () => {
               {activeAssignments.join(", ")}
             </div>
           </div>
-          {/* Assignment View Column */}
           <div className="teacher-cell">
             <h2>ZH-k megtekintése</h2>
             <label htmlFor="assignment-select">
@@ -219,12 +215,12 @@ const TeacherView: React.FC = () => {
                 ))}
               </ul>
             )}
-           {showModal && (
-  <Modal
-    content={modalContent}
-    onClose={() => setShowModal(false)}
-  />
-)}
+            {showModal && (
+              <Modal
+                content={modalContent}
+                onClose={() => setShowModal(false)}
+              />
+            )}
           </div>
         </div>
       </div>

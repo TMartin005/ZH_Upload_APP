@@ -1,11 +1,14 @@
 const express = require('express');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
 const zhRoutes = require('./routes/zh_types');
+const authRoutes = require('./routes/auth');
 const path = require('path');
+const { env } = require('process');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'uploads'), { extensions: ['c', 'cpp
 app.use('/api/students', studentRoutes);
 app.use('/api/teachers', teacherRoutes);
 app.use('/api/zh_types', zhRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/api/file/:assignment/:folder/:filename', (req, res) => {
     const { assignment, folder, filename } = req.params;
@@ -30,7 +34,9 @@ app.get('/api/file/:assignment/:folder/:filename', (req, res) => {
         }
     });
 });
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(env.JWT_SECRET);
 });
