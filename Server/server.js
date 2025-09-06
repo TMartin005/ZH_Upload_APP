@@ -1,11 +1,18 @@
 const express = require('express');
+
 const cors = require('cors');
+const studentRoutes = require('./routes/student');
+const teacherRoutes = require('./routes/teacher');
 const app = express();
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello from Node.js server!');
-});
+// Middleware
+app.use(cors());
+
+// Routes
+app.use('/api/students', studentRoutes);
+app.use('/api/teachers', teacherRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
