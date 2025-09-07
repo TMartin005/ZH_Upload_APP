@@ -4,6 +4,7 @@ const cors = require('cors');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
 const zhRoutes = require('./routes/zh_types');
+const path = require('path');
 const app = express();
 const PORT = 3000;
 
