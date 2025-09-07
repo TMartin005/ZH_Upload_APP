@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
+const zhRoutes = require('./routes/zh_types');
 const app = express();
 const PORT = 3000;
 
