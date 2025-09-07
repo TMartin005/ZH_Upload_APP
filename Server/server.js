@@ -12,7 +12,7 @@ app.use(cors());
 // Routes
 app.use('/api/students', studentRoutes);
 app.use('/api/teachers', teacherRoutes);
-
+app.use('/api/zh_types', zhRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
