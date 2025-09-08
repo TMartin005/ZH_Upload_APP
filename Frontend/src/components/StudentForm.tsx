@@ -17,6 +17,7 @@ const StudentForm = () => {
   const [selfAuth, setSelfAuth] = useState(false);
   const [aiAcknowledgment, setAiAcknowledgment] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [additionalFile, setAdditionalFile] = useState<File | null>(null);
 
   // Assignment lists fetched from server
   const [assignments, setAssignments] = useState<string[]>([]);
