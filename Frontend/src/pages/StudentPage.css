@@ -1,0 +1,10 @@
+:root {
+  --primary-color: #90caf9;
+  --primary-dark: #1976d2;
+  --background-dark: #121212;
+  --surface-dark: #1e1e1e;
+  --border-radius: 6px;
+  --input-radius: 6px;
+  --box-shadow: 0 2px 12px rgba(0,0,0,0.32);
+  --table-shadow: 0 2px 8px rgba(0,0,0,0.32);
+}
