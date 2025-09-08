@@ -37,8 +37,31 @@ const StudentForm = () => {
       alert("Please fill in all fields and upload a file.");
       return;
     }
-    // For now, just log the data
-    console.log({ name, neptunCode, assignment, file });
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", name);
+    formData.append("neptunCode", neptunCode);
+    formData.append("assignment", assignment);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/students/submit", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        setUploadSuccess(true);
+        setName("");
+        setNeptunCode("");
+        setAssignment("");
+        setFile(null);
+      } else {
+        setUploadSuccess(false);
+        alert("Upload failed.");
+      }
+    } catch (error) {
+      setUploadSuccess(false);
+      alert("Error uploading file. Please try again.");
+    }
   };
 
   return (
