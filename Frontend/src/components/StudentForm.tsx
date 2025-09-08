@@ -21,6 +21,7 @@ const StudentForm = () => {
 
   // Assignment lists fetched from server
   const [assignments, setAssignments] = useState<string[]>([]);
+  const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
   // Fetch assignments from server on mount
