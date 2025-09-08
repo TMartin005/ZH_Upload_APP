@@ -54,8 +54,19 @@ const StudentForm = () => {
     }
   };
 
-  // Submit form data to server
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleAdditionalFileClick = event => {
+    event.target.value = "";
+  };
+
+  const handleAdditionalFileChange = event => {
+    setAdditionalFile(event.target.files[0]);
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => setAdditionalFileContent(e.target.result as string);
+      reader.readAsText(event.target.files[0]);
+    }
+  };
+
     event.preventDefault();
     if (!name || !neptunCode || !assignment || !file) {
       alert("Please fill in all fields and upload a file.");
