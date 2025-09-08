@@ -14,6 +14,8 @@ const StudentForm = () => {
   const [name, setName] = useState("");
   const [neptunCode, setNeptunCode] = useState("");
   const [assignment, setAssignment] = useState("");
+  const [selfAuth, setSelfAuth] = useState(false);
+  const [aiAcknowledgment, setAiAcknowledgment] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
   // Assignment lists fetched from server
