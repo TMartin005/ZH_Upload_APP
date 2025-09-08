@@ -40,13 +40,18 @@ const StudentForm = () => {
       });
   }, []);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files ? e.target.files[0] : null;
-    if (selectedFile && ![".c", ".cpp", ".py"].some(ext => selectedFile.name.endsWith(ext))) {
-      alert("Please upload a .c, .cpp, or .py file.");
-      return;
-    }
+  const handleFileClick = event => {
+    event.target.value = "";
+  };
+
+  const handleFileChange = event => {
+    const selectedFile = event.target.files[0];
     setFile(selectedFile);
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = e => setFileContent(e.target.result as string);
+      reader.readAsText(selectedFile);
+    }
   };
 
   // Submit form data to server
