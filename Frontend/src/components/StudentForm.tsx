@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 
+// Modal component for displaying file content
+const Modal = ({ content, onClose }) => (
+  <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <pre>{content}</pre>
+      <button onClick={onClose}>Close</button>
+    </div>
+  </div>
+);
+
 const StudentForm = () => {
   const [name, setName] = useState("");
   const [neptunCode, setNeptunCode] = useState("");
