@@ -16,15 +16,14 @@ const StudentForm = () => {
   const [assignment, setAssignment] = useState("");
   const [selfAuth, setSelfAuth] = useState(false);
   const [aiAcknowledgment, setAiAcknowledgment] = useState(false);
+
   const [file, setFile] = useState<File | null>(null);
   const [additionalFile, setAdditionalFile] = useState<File | null>(null);
 
-  // Assignment lists fetched from server
   const [assignments, setAssignments] = useState<string[]>([]);
   const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
-  // Fetch assignments from server on mount
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [additionalFileContent, setAdditionalFileContent] = useState<string | null>(null);
   const [showFileModal, setShowFileModal] = useState(false);
@@ -67,28 +66,49 @@ const StudentForm = () => {
     }
   };
 
+  const handleSubmit = async event => {
     event.preventDefault();
-    if (!name || !neptunCode || !assignment || !file) {
-      alert("Please fill in all fields and upload a file.");
+    if (
+      !name ||
+      !neptunCode ||
+      !assignment ||
+      !selfAuth ||
+      !aiAcknowledgment ||
+      !file
+    ) {
+      alert("Please fill in all required fields and upload a file.");
       return;
     }
+    const mainFileExt = file.name.substring(file.name.lastIndexOf('.'));
+    const fileName = `${name}_${neptunCode}_${assignment}${mainFileExt}`;
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file, fileName);
+    if (additionalFile) {
+      formData.append("additionalFile", additionalFile, additionalFile.name);
+    }
     formData.append("name", name);
     formData.append("neptunCode", neptunCode);
     formData.append("assignment", assignment);
+    formData.append("wroteCode", selfAuth ? "true" : "false");
+    formData.append("aiAcknowledgment", aiAcknowledgment ? "true" : "false");
 
     try {
-      const response = await fetch("http://localhost:3000/api/students/submit", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/students/submit",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       if (response.ok) {
         setUploadSuccess(true);
         setName("");
         setNeptunCode("");
         setAssignment("");
+        setSelfAuth(false);
+        setAiAcknowledgment(false);
         setFile(null);
+        setAdditionalFile(null);
         window.alert("Upload successful!");
       } else {
         setUploadSuccess(false);
