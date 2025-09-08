@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const StudentForm = () => {
   const [name, setName] = useState("");
@@ -6,8 +6,19 @@ const StudentForm = () => {
   const [assignment, setAssignment] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
-  // Added static assignment list
-  const assignments = ["Assignment 1", "Assignment 2"];
+  // Assignment lists fetched from server
+  const [assignments, setAssignments] = useState<string[]>([]);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  // Fetch assignments from server on mount
+  useEffect(() => {
+    fetch("http://localhost:3000/api/zh_types")
+      .then(res => res.json())
+      .then(data => {
+        setAssignments(data.assignments || []);
+        setAssignment((data.assignments && data.assignments[0]) || "");
+      });
+  }, []);
 
   // Added file type validation
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
