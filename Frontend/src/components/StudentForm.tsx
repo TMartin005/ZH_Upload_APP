@@ -122,50 +122,152 @@ const StudentForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Neptun Code:
-        <input
-          type="text"
-          value={neptunCode}
-          onChange={e => setNeptunCode(e.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Assignment:
-        <select
-          value={assignment}
-          onChange={e => setAssignment(e.target.value)}
-          required
-        >
-          <option value="">Select assignment</option>
-          {assignments.map(a => (
-            <option key={a} value={a}>{a}</option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <label>
-        Upload .c/.cpp file:
-        <input
-          type="file"
-          onChange={handleFileChange}
-          required
-        />
-      </label>
-      <br />
-      <button type="submit">Submit</button>
+      <table className="student-form-table">
+        <tbody>
+          <tr>
+            <td>
+              <label htmlFor="name">Név:</label>
+            </td>
+            <td colSpan={2}>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="neptun">Neptun Kód:</label>
+            </td>
+            <td colSpan={2}>
+              <input
+                id="neptun"
+                type="text"
+                value={neptunCode}
+                onChange={e => setNeptunCode(e.target.value)}
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="assignment">ZH:</label>
+            </td>
+            <td colSpan={2}>
+              <select
+                id="assignment"
+                value={assignment}
+                onChange={e => setAssignment(e.target.value)}
+                required
+              >
+                <option value="">Válassz ZH-t</option>
+                {activeAssignments.map(a => (
+                  <option key={a} value={a}>
+                    {a}
+                  </option>
+                ))}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selfAuth}
+                  onChange={() => setSelfAuth(!selfAuth)}
+                  required
+                />
+                Én írtam a kódot.
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={aiAcknowledgment}
+                  onChange={() => setAiAcknowledgment(!aiAcknowledgment)}
+                  required
+                />
+                Elfogadom, hogy ha a kód AI által generált, akkor a ZH-t újra kell írni.
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={file ? 2 : 3} style={{ textAlign: "center" }}>
+              <label>
+                .c/.cpp fájl feltöltése:
+                <input
+                  type="file"
+                  onClick={handleFileClick}
+                  onChange={handleFileChange}
+                  required
+                  style={{ display: "inline-block", marginLeft: "8px" }}
+                />
+              </label>
+              {showFileModal && (
+                <Modal content={fileContent} onClose={() => setShowFileModal(false)} />
+              )}
+            </td>
+            {file && (
+              <td className="view-link-cell">
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    setShowFileModal(true);
+                  }}
+                  className="view-link"
+                >
+                  Megtekintés
+                </a>
+              </td>
+            )}
+          </tr>
+          <tr>
+            <td colSpan={additionalFile ? 2 : 3} style={{ textAlign: "center" }}>
+              <label>
+                egyéb fájl feltöltése (opcionális):
+                <input
+                  type="file"
+                  onClick={handleAdditionalFileClick}
+                  onChange={handleAdditionalFileChange}
+                />
+              </label>
+            </td>
+            {additionalFile && (
+              <td className="view-link-cell">
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    setShowAdditionalFileModal(true);
+                  }}
+                  className="view-link"
+                >
+                  Megtekintés
+                </a>
+                {showAdditionalFileModal && (
+                  <Modal
+                    content={additionalFileContent}
+                    onClose={() => setShowAdditionalFileModal(false)}
+                  />
+                )}
+              </td>
+            )}
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <button type="submit">Beadás</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </form>
   );
 };
