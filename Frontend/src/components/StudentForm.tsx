@@ -27,6 +27,9 @@ const StudentForm = () => {
   // Fetch assignments from server on mount
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [additionalFileContent, setAdditionalFileContent] = useState<string | null>(null);
+  const [showFileModal, setShowFileModal] = useState(false);
+  const [showAdditionalFileModal, setShowAdditionalFileModal] = useState(false);
+
   useEffect(() => {
     fetch("http://localhost:3000/api/zh_types")
       .then(res => res.json())
