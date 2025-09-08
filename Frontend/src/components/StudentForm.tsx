@@ -35,7 +35,8 @@ const StudentForm = () => {
       .then(res => res.json())
       .then(data => {
         setAssignments(data.assignments || []);
-        setAssignment((data.assignments && data.assignments[0]) || "");
+        setActiveAssignments(data.active || []);
+        setAssignment((data.active && data.active[0]) || "");
       });
   }, []);
 
