@@ -20,7 +20,6 @@ const StudentForm = () => {
       });
   }, []);
 
-  // Added file type validation
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
     if (selectedFile && ![".c", ".cpp", ".py"].some(ext => selectedFile.name.endsWith(ext))) {
@@ -54,6 +53,7 @@ const StudentForm = () => {
         setNeptunCode("");
         setAssignment("");
         setFile(null);
+        window.alert("Upload successful!");
       } else {
         setUploadSuccess(false);
         alert("Upload failed.");
