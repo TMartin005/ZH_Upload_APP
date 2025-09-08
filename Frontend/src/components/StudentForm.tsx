@@ -6,12 +6,26 @@ const StudentForm = () => {
   const [assignment, setAssignment] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
+  // Added static assignment list
+  const assignments = ["Assignment 1", "Assignment 2"];
+
+  // Added file type validation
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files ? e.target.files[0] : null;
+    if (selectedFile && ![".c", ".cpp", ".py"].some(ext => selectedFile.name.endsWith(ext))) {
+      alert("Please upload a .c, .cpp, or .py file.");
+      return;
+    }
+    setFile(selectedFile);
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!name || !neptunCode || !assignment || !file) {
       alert("Please fill in all fields and upload a file.");
       return;
     }
+    // For now, just log the data
     console.log({ name, neptunCode, assignment, file });
   };
 
@@ -45,16 +59,17 @@ const StudentForm = () => {
           required
         >
           <option value="">Select assignment</option>
-          <option value="Assignment 1">Assignment 1</option>
-          <option value="Assignment 2">Assignment 2</option>
+          {assignments.map(a => (
+            <option key={a} value={a}>{a}</option>
+          ))}
         </select>
       </label>
       <br />
       <label>
-        Upload file:
+        Upload .c/.cpp file:
         <input
           type="file"
-          onChange={e => setFile(e.target.files ? e.target.files[0] : null)}
+          onChange={handleFileChange}
           required
         />
       </label>
