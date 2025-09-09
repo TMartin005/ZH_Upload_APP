@@ -67,14 +67,23 @@ const handleFileChange = event => {
     event.target.value = "";
   };
 
-  const handleAdditionalFileChange = event => {
-    setAdditionalFile(event.target.files[0]);
-    if (event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = e => setAdditionalFileContent(e.target.result as string);
-      reader.readAsText(event.target.files[0]);
+const handleAdditionalFileChange = event => {
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    const ext = selectedFile.name.substring(selectedFile.name.lastIndexOf('.')).toLowerCase();
+    if (!allowedAdditionalExtensions.includes(ext)) {
+      alert("Csak .csv fájlt tölthetsz fel!");
+      event.target.value = "";
+      setAdditionalFile(null);
+      setAdditionalFileContent(null);
+      return;
     }
-  };
+    setAdditionalFile(selectedFile);
+    const reader = new FileReader();
+    reader.onload = e => setAdditionalFileContent(e.target.result as string);
+    reader.readAsText(selectedFile);
+  }
+};
 
   const handleSubmit = async event => {
     event.preventDefault();
