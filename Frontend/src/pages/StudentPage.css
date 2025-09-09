@@ -56,6 +56,20 @@ body {
   min-width: 220px;
   max-width: 300px;
 }
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--primary-color);
+  border-radius: var(--input-radius);
+  font-size: 1rem;
+  margin: 4px 0 8px 0;
+  box-sizing: border-box;
+  background: #23272a;
+  color: #e0e0e0;
+  transition: border-color 0.2s;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
