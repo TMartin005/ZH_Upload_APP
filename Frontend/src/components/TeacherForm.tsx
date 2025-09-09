@@ -13,6 +13,18 @@ const TeacherForm: React.FC = () => {
   return (
     <div>
        <h1>Tanár nézet</h1>
+      <input
+        type="text"
+        value={newAssignment}
+        onChange={(e) => setNewAssignment(e.target.value)}
+        placeholder="New assignment name"
+      />
+      <button onClick={handleAddAssignment}>Add Assignment</button>
+      <ul>
+        {assignments.map((assignment, idx) => (
+          <li key={idx}>{assignment}</li>
+        ))}
+      </ul>
     </div>
   );
 };
