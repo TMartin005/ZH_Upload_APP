@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import type { StudentSubmission } from "../interfaces/ZH";
+
 
 const TeacherForm: React.FC = () => {
   const [assignments, setAssignments] = useState<string[]>([]);
