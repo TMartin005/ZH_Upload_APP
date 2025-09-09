@@ -94,9 +94,10 @@ const TeacherForm: React.FC = () => {
           <div className="teacher-cell">
             <h2>ZH-k kezelése</h2>
             <input
-              type="checkbox"
-              checked={selectedAssignments.includes(assignment)}
-              onChange={() => handleCheckboxChange(assignment)}
+              type="text"
+              value={newAssignment}
+              onChange={(e) => setNewAssignment(e.target.value)}
+              placeholder="Új ZH neve"
             />
             {assignment}
           </li>
