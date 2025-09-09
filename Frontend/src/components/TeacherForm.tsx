@@ -87,18 +87,12 @@ const TeacherForm: React.FC = () => {
   );
 
   return (
-    <div>
-       <h1>Tanár nézet</h1>
-      <input
-        type="text"
-        value={newAssignment}
-        onChange={(e) => setNewAssignment(e.target.value)}
-        placeholder="Új feladat neve"
-      />
-      <button onClick={handleAddAssignment}>Feladat hozzáadása</button>
-      <ul>
-        {assignments.map((assignment, idx) => (
-          <li key={idx}>
+    <div className="teacher-container">
+      <h1>Tanár nézet</h1>
+      <div className="teacher-table">
+        <div className="teacher-row">
+          <div className="teacher-cell">
+            <h2>ZH-k kezelése</h2>
             <input
               type="checkbox"
               checked={selectedAssignments.includes(assignment)}
