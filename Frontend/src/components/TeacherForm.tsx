@@ -52,8 +52,19 @@ const TeacherForm: React.FC = () => {
     );
   };
 
-  const handleActivateAssignments = () => {
-    alert("Activated assignments: " + selectedAssignments.join(", "));
+  const handleActivateAssignments = async () => {
+    await fetch(`http://${host}:${port}/api/zh_types`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ assignments, active: selectedAssignments }),
+    });
+    fetch(`http://${host}:${port}/api/zh_types`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAssignments(data.assignments || []);
+        setActiveAssignments(data.active || []);
+        setSelectedAssignments(data.active || []);
+      });
   };
 
   return (
