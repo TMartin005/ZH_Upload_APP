@@ -124,6 +124,49 @@ const TeacherForm: React.FC = () => {
               {activeAssignments.join(", ")}
             </div>
           </div>
+          <div className="teacher-cell">
+            <h2>ZH-k megtekintése</h2>
+            <label htmlFor="assignment-select">
+              <strong> Beküldött ZH-k megtekintése:</strong>
+            </label>
+            <select
+              id="assignment-select"
+              value={selectedAssignment_list}
+              onChange={(e) => setSelectedAssignment_list(e.target.value)}
+            >
+              {Object.keys(
+                submissions.reduce((acc, sub) => {
+                  acc[sub.assignmentName] = true;
+                  return acc;
+                }, {})
+              ).map((assignment) => (
+                <option key={assignment} value={assignment}>
+                  {assignment}
+                </option>
+              ))}
+            </select>
+            {filteredSubmissions.length === 0 ? (
+              <p>Nincs még beküldés ehhez a ZH-hoz.</p>
+            ) : (
+              <div className="zh-list-container">
+                <ul>
+                  {filteredSubmissions.map((submission, index) => (
+                    <li key={index}>
+                      <strong>Név:</strong> {submission.studentName} <br />
+                      <strong>Neptun Kód:</strong> {submission.neptunCode} <br />
+                      <strong>ZH:</strong> {submission.assignmentName} <br />
+                      <strong>Fájl: </strong>
+                      {submission.fileName}
+                      <br />
+                      <hr className="zh-separator" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
