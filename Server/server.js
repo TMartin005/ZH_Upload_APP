@@ -11,6 +11,7 @@ const PORT = 3000;
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.use(express.static(path.join(__dirname, 'uploads'), { extensions: ['c', 'cpp', 'csv'], index: false }));
 
