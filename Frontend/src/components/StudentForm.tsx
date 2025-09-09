@@ -220,11 +220,12 @@ const handleAdditionalFileChange = event => {
           <tr>
             <td colSpan={file ? 2 : 3} style={{ textAlign: "center" }}>
               <label>
-                .c/.cpp fájl feltöltése:
+                program fájl feltöltése:
                 <input
                   type="file"
                   onClick={handleFileClick}
                   onChange={handleFileChange}
+                  accept=".c,.cpp,.py"
                   required
                   style={{ display: "inline-block", marginLeft: "8px" }}
                 />
@@ -251,11 +252,12 @@ const handleAdditionalFileChange = event => {
           <tr>
             <td colSpan={additionalFile ? 2 : 3} style={{ textAlign: "center" }}>
               <label>
-                egyéb fájl feltöltése (opcionális):
+                csv fájl feltöltése (opcionális):
                 <input
                   type="file"
                   onClick={handleAdditionalFileClick}
                   onChange={handleAdditionalFileChange}
+                  accept=".csv"
                 />
               </label>
             </td>
