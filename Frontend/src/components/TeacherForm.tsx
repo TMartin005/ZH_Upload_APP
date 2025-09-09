@@ -13,7 +13,17 @@ const TeacherForm: React.FC = () => {
   const host = import.meta.env.VITE_SERVER_IP;
   const port = import.meta.env.VITE_PORT;
 
-  const handleAddAssignment = () => {
+  useEffect(() => {
+    fetch(`http://${host}:${port}/api/zh_types`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAssignments(data.assignments || []);
+        setActiveAssignments(data.active || []);
+        setSelectedAssignments(data.active || []);
+      });
+  }, []);
+
+  const handleAddAssignment = async () => {
     if (!newAssignment.trim()) return;
     setAssignments([...assignments, newAssignment.trim()]);
     setNewAssignment("");
