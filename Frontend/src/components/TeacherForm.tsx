@@ -67,6 +67,21 @@ const TeacherForm: React.FC = () => {
       });
   };
 
+  useEffect(() => {
+    fetch(`http://${host}:${port}/api/teachers/submissions`)
+      .then((res) => res.json())
+      .then((data) => {
+        const flat = Object.entries(data).flatMap(([assignment, files]) =>
+          (Array.isArray(files) ? files : []).map((sub) => ({
+            ...sub,
+            assignmentName: assignment,
+          }))
+        );
+        setSubmissions(flat);
+        setSelectedAssignment_list(Object.keys(data)[0] || "");
+      });
+  }, []);
+
   return (
     <div>
        <h1>Tanár nézet</h1>
