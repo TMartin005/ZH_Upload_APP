@@ -4,12 +4,12 @@ import type { StudentSubmission } from "../interfaces/ZH";
 
 const TeacherForm: React.FC = () => {
   const [assignments, setAssignments] = useState<string[]>([]);
-  const [newAssignment, setNewAssignment] = useState("");
   const [activeAssignments, setActiveAssignments] = useState<string[]>([]);
   const [selectedAssignments, setSelectedAssignments] = useState<string[]>([]);
   const [newAssignment, setNewAssignment] = useState("");
   const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
   const [selectedAssignment_list, setSelectedAssignment_list] = useState<string>("");
+
   const host = import.meta.env.VITE_SERVER_IP;
   const port = import.meta.env.VITE_PORT;
 
