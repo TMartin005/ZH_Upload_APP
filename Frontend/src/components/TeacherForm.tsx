@@ -3,11 +3,20 @@ import React, { useState } from "react";
 const TeacherForm: React.FC = () => {
   const [assignments, setAssignments] = useState<string[]>([]);
   const [newAssignment, setNewAssignment] = useState("");
+  const [selectedAssignments, setSelectedAssignments] = useState<string[]>([]);
 
   const handleAddAssignment = () => {
     if (!newAssignment.trim()) return;
     setAssignments([...assignments, newAssignment.trim()]);
     setNewAssignment("");
+  };
+
+  const handleCheckboxChange = (assignment: string) => {
+    setSelectedAssignments((prev) =>
+      prev.includes(assignment)
+        ? prev.filter((a) => a !== assignment)
+        : [...prev, assignment]
+    );
   };
 
   return (
