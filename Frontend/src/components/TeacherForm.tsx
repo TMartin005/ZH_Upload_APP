@@ -99,13 +99,31 @@ const TeacherForm: React.FC = () => {
               onChange={(e) => setNewAssignment(e.target.value)}
               placeholder="Új ZH neve"
             />
-            {assignment}
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleActivateAssignments}>
-        Kijelölt feladatok aktiválása
-      </button>
+            <button onClick={handleAddAssignment}>Új ZH hozzáadása</button>
+            <div style={{ marginTop: "10px" }}>
+              <strong>ZH-k:</strong>
+              <ul>
+                {assignments.map((assignment) => (
+                  <li key={assignment}>
+                    <input
+                      type="checkbox"
+                      checked={selectedAssignments.includes(assignment)}
+                      onChange={() => handleCheckboxChange(assignment)}
+                    />
+                    {assignment}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={handleActivateAssignments}>
+                Kiválasztott ZH-k aktiválása
+              </button>
+            </div>
+            <hr />
+            <div>
+              <strong>Aktív ZH-k a hallgatók számára:</strong>{" "}
+              {activeAssignments.join(", ")}
+            </div>
+          </div>
     </div>
   );
 };
