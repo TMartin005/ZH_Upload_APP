@@ -45,15 +45,23 @@ const StudentForm = () => {
     event.target.value = "";
   };
 
-  const handleFileChange = event => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = e => setFileContent(e.target.result as string);
-      reader.readAsText(selectedFile);
+const handleFileChange = event => {
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    const ext = selectedFile.name.substring(selectedFile.name.lastIndexOf('.')).toLowerCase();
+    if (!allowedExtensions.includes(ext)) {
+      alert("Csak .c, .cpp vagy .py fájlokat tölthetsz fel!");
+      event.target.value = "";
+      setFile(null);
+      setFileContent(null);
+      return;
     }
-  };
+    setFile(selectedFile);
+    const reader = new FileReader();
+    reader.onload = e => setFileContent(e.target.result as string);
+    reader.readAsText(selectedFile);
+  }
+};
 
   const handleAdditionalFileClick = event => {
     event.target.value = "";
