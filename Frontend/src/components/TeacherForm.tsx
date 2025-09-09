@@ -25,7 +25,15 @@ const TeacherForm: React.FC = () => {
 
   const handleAddAssignment = async () => {
     if (!newAssignment.trim()) return;
-    setAssignments([...assignments, newAssignment.trim()]);
+    const updatedAssignments = [...assignments, newAssignment.trim()];
+    await fetch(`http://${host}:${port}/api/zh_types`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        assignments: updatedAssignments,
+        active: activeAssignments,
+      }),
+    });
     setNewAssignment("");
   };
 
