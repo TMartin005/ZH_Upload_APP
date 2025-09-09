@@ -31,8 +31,12 @@ const StudentForm = () => {
 
   const allowedExtensions = [".c", ".cpp", ".py"];
   const allowedAdditionalExtensions = [".csv"];
+
+  const host = import.meta.env.VITE_SERVER_IP;
+  const port = import.meta.env.VITE_PORT;
+
   useEffect(() => {
-    fetch("http://localhost:3000/api/zh_types")
+    fetch(`http://${host}:${port}/api/zh_types`)
       .then(res => res.json())
       .then(data => {
         setAssignments(data.assignments || []);
@@ -113,7 +117,7 @@ const handleAdditionalFileChange = event => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/students/submit",
+        `http://${host}:${port}/api/students/submit`,
         {
           method: "POST",
           body: formData,
