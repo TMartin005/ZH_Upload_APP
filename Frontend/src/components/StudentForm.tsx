@@ -29,6 +29,8 @@ const StudentForm = () => {
   const [showFileModal, setShowFileModal] = useState(false);
   const [showAdditionalFileModal, setShowAdditionalFileModal] = useState(false);
 
+  const allowedExtensions = [".c", ".cpp", ".py"];
+  const allowedAdditionalExtensions = [".csv"];
   useEffect(() => {
     fetch("http://localhost:3000/api/zh_types")
       .then(res => res.json())
