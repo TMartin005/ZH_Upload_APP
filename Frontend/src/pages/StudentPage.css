@@ -50,6 +50,12 @@ body {
   min-width: 200px;
   white-space: nowrap;
 }
+
+.student-form-table td[colspan="2"] {
+  width: 320px;
+  min-width: 220px;
+  max-width: 300px;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
