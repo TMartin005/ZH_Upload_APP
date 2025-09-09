@@ -82,6 +82,10 @@ const TeacherForm: React.FC = () => {
       });
   }, []);
 
+  const filteredSubmissions = submissions.filter(
+    (submission) => submission.assignmentName === selectedAssignment_list
+  );
+
   return (
     <div>
        <h1>Tanár nézet</h1>
