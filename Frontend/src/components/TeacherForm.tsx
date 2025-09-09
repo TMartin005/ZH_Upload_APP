@@ -35,6 +35,13 @@ const TeacherForm: React.FC = () => {
       }),
     });
     setNewAssignment("");
+    fetch(`http://${host}:${port}/api/zh_types`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAssignments(data.assignments || []);
+        setActiveAssignments(data.active || []);
+        setSelectedAssignments(data.active || []);
+      });
   };
 
   const handleCheckboxChange = (assignment: string) => {
