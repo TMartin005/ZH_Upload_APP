@@ -19,6 +19,10 @@ const TeacherForm: React.FC = () => {
     );
   };
 
+  const handleActivateAssignments = () => {
+    alert("Activated assignments: " + selectedAssignments.join(", "));
+  };
+
   return (
     <div>
        <h1>Tanár nézet</h1>
