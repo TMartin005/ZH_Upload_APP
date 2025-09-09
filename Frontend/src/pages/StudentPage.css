@@ -27,6 +27,16 @@ body {
   min-height: 100vh;
 }
 
+.student-form-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 700px;
+  margin: 24px auto;
+  border-radius: 8px;
+  box-shadow: var(--table-shadow);
+  background: var(--surface-dark);
+  color: #e0e0e0;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
