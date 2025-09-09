@@ -37,6 +37,12 @@ body {
   background: var(--surface-dark);
   color: #e0e0e0;
 }
+.student-form-table td,
+.student-form-table th {
+  border: 1px solid #333;
+  padding: 12px;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
