@@ -45,6 +45,9 @@ const TeacherForm: React.FC = () => {
           </li>
         ))}
       </ul>
+      <button onClick={handleActivateAssignments}>
+        Kijelölt feladatok aktiválása
+      </button>
     </div>
   );
 };
