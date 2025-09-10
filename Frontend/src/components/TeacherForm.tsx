@@ -56,7 +56,11 @@ const TeacherForm: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch(`http://${host}:${port}/api/teachers/submissions`)
+    fetch(`http://${host}:${port}/api/teachers/submissions`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const flat = Object.entries(data).flatMap(([assignment, files]) =>
