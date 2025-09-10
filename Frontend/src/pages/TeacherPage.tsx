@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TeacherView from '../components/TeacherForm';
-
+import "./TeacherPage.css";
 
 const TeacherPage: React.FC = () => {
     return (
