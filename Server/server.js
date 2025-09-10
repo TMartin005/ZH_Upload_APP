@@ -13,7 +13,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
-app.use(express.static(path.join(__dirname, 'uploads'), { extensions: ['c', 'cpp', 'csv'], index: false }));
+app.use(express.static(path.join(__dirname, 'uploads'), { extensions: ['c', 'cpp', 'py', 'csv'], index: false }));
 
 // Routes
 app.use('/api/students', studentRoutes);
