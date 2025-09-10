@@ -137,3 +137,13 @@
   margin-top: 16px;
 }
 
+.megtekintes-link {
+  margin-left: 8px;
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.megtekintes-link:hover {
+  color: var(--primary-dark);
+}
+
