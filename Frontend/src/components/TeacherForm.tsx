@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import type { StudentSubmission } from "../interfaces/ZH";
 
+// Modal for viewing code file contents
+const Modal = ({ content, onClose }) => (
+  <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <pre>{content}</pre>
+      <button onClick={onClose}>Close</button>
+    </div>
+  </div>
+);
 
 const TeacherForm: React.FC = () => {
   const [assignments, setAssignments] = useState<string[]>([]);
