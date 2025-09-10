@@ -215,6 +215,12 @@ const TeacherForm: React.FC = () => {
                 </ul>
               </div>
             )}
+            {showModal && (
+              <Modal
+                content={modalContent}
+                onClose={() => setShowModal(false)}
+              />
+            )}
           </div>
         </div>
       </div>
