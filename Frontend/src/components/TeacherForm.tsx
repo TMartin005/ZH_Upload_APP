@@ -21,6 +21,8 @@ const TeacherForm: React.FC = () => {
 
   const host = import.meta.env.VITE_SERVER_IP;
   const port = import.meta.env.VITE_PORT;
+  const [modalContent, setModalContent] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`http://${host}:${port}/api/zh_types`)
