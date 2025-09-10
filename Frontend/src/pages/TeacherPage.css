@@ -37,3 +37,30 @@
   border-right: 1px solid #eee;
 }
 
+.teacher-cell:last-child {
+  border-right: none;
+}
+
+.teacher-cell h2 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+.teacher-cell input[type="text"],
+.teacher-cell select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--primary-color);
+  border-radius: var(--input-radius);
+  font-size: 1rem;
+  margin: 4px 0 12px 0;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.teacher-cell input[type="text"]:focus,
+.teacher-cell select:focus {
+  border-color: var(--primary-dark);
+  outline: none;
+}
+
