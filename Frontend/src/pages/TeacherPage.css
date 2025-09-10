@@ -64,3 +64,19 @@
   outline: none;
 }
 
+.teacher-cell button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 8px 16px;
+  font-size: 1rem;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.teacher-cell button:hover {
+  background: var(--primary-dark);
+}
+
