@@ -193,6 +193,21 @@ const TeacherForm: React.FC = () => {
                       <strong>ZH:</strong> {submission.assignmentName} <br />
                       <strong>Fájl: </strong>
                       {submission.fileName}
+                      {isCodeFile(submission) && (
+                        <>
+                          {" "}
+                          <a
+                            href="#"
+                            className="megtekintes-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              fetchFileContent(submission);
+                            }}
+                          >
+                            Megtekintés
+                          </a>
+                        </>
+                      )}
                       <br />
                       <hr className="zh-separator" />
                     </li>
