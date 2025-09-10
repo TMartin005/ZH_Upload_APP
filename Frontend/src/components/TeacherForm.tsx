@@ -97,6 +97,31 @@ const TeacherForm: React.FC = () => {
     (submission) => submission.assignmentName === selectedAssignment_list
   );
 
+  // Check if the file is a code file (.c or .cpp or .py)
+  const isCodeFile = (submission: StudentSubmission) => {
+    const regex = new RegExp(
+      `^${submission.studentName}_${submission.neptunCode}_${submission.assignmentName}(\\.c|\\.cpp|\\.py)?$`
+    );
+    return regex.test(submission.fileName);
+  };
+
+  // Fetch and show file content in modal
+  const fetchFileContent = async (submission: StudentSubmission) => {
+    let fileUrl = `http://${host}:${port}/${submission.assignmentName}/${submission.fileName}`;
+    if (!/\.[^.]+$/.test(submission.fileName)) {
+      fileUrl = `http://${host}:${port}/${submission.assignmentName}/${submission.fileName}/${submission.fileName}`;
+    }
+    try {
+      const res = await fetch(fileUrl);
+      const text = await res.text();
+      setModalContent(text);
+      setShowModal(true);
+    } catch {
+      setModalContent("Nem sikerült betölteni a fájlt.");
+      setShowModal(true);
+    }
+  };
+
   return (
     <div className="teacher-container">
       <h1>Tanár nézet</h1>
