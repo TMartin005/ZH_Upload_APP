@@ -1,3 +1,4 @@
 /Server/uploads
 /node_modules
 Frontend/.env
+Server/.env
