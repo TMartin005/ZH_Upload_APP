@@ -23,5 +23,5 @@ app.use('/api/zh_types', zhRoutes);
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running at port ${PORT}`);
 });
