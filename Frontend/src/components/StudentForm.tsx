@@ -33,7 +33,7 @@ const StudentForm = () => {
   const allowedAdditionalExtensions = [".csv"];
 
   const host = import.meta.env.VITE_SERVER_IP;
-  const port = import.meta.env.VITE_PORT;
+  const port = import.meta.env.VITE_BACKEND_PORT;
 
   useEffect(() => {
     fetch(`http://${host}:${port}/api/zh_types`)

@@ -20,7 +20,7 @@ const TeacherForm: React.FC = () => {
   const [selectedAssignment_list, setSelectedAssignment_list] = useState<string>("");
 
   const host = import.meta.env.VITE_SERVER_IP;
-  const port = import.meta.env.VITE_PORT;
+  const port = import.meta.env.VITE_BACKEND_PORT;
   const [modalContent, setModalContent] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
