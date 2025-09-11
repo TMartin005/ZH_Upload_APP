@@ -51,7 +51,7 @@ Server/              # Node.js/Express backend
    
  Ha a ZH_APP.bat fájlt futtatod, automatikusan telepíti a szükséges npm csomagokat (ha még nincsenek letöltve), majd elindítja a frontend és backend szervereket. 
 
-Manuális indítás esetén a következő parancsokat használd:
+ Manuális indítás esetén a következő parancsokat használd:
    ```sh
  cd Frontend && npm install && npm run dev -- --host
    ```
