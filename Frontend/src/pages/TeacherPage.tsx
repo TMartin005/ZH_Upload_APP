@@ -6,7 +6,7 @@ const TeacherPage: React.FC = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const [input, setInput] = useState("");
     const host = import.meta.env.VITE_SERVER_IP;
-    const port = import.meta.env.VITE_PORT;
+    const port = import.meta.env.VITE_BACKEND_PORT;
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const response = await fetch(`http://${host}:${port}/api/auth/login`, {
