@@ -29,7 +29,7 @@ const StudentForm = () => {
   const [showFileModal, setShowFileModal] = useState(false);
   const [showAdditionalFileModal, setShowAdditionalFileModal] = useState(false);
 
-  const allowedExtensions = [".c", ".cpp", ".py"];
+  const allowedExtensions = [".c", ".cpp", ".py", ".ipynb"];
   const allowedAdditionalExtensions = [".csv"];
 
   const host = import.meta.env.VITE_SERVER_IP;
@@ -54,7 +54,7 @@ const handleFileChange = event => {
   if (selectedFile) {
     const ext = selectedFile.name.substring(selectedFile.name.lastIndexOf('.')).toLowerCase();
     if (!allowedExtensions.includes(ext)) {
-      alert("Csak .c, .cpp vagy .py fájlokat tölthetsz fel!");
+      alert("Csak " + allowedExtensions.join(", ") + " típusú fájlt tölthetsz fel!");
       event.target.value = "";
       setFile(null);
       setFileContent(null);
@@ -76,7 +76,7 @@ const handleAdditionalFileChange = event => {
   if (selectedFile) {
     const ext = selectedFile.name.substring(selectedFile.name.lastIndexOf('.')).toLowerCase();
     if (!allowedAdditionalExtensions.includes(ext)) {
-      alert("Csak .csv fájlt tölthetsz fel!");
+      alert("Csak " + allowedAdditionalExtensions.join(", ") + " típusú fájlt tölthetsz fel!");
       event.target.value = "";
       setAdditionalFile(null);
       setAdditionalFileContent(null);
@@ -229,7 +229,7 @@ const handleAdditionalFileChange = event => {
                   type="file"
                   onClick={handleFileClick}
                   onChange={handleFileChange}
-                  accept=".c,.cpp,.py"
+                  accept={allowedExtensions.join(",")}
                   required
                   style={{ display: "inline-block", marginLeft: "8px" }}
                 />
@@ -261,7 +261,7 @@ const handleAdditionalFileChange = event => {
                   type="file"
                   onClick={handleAdditionalFileClick}
                   onChange={handleAdditionalFileChange}
-                  accept=".csv"
+                  accept={allowedAdditionalExtensions.join(",")}
                 />
               </label>
             </td>
