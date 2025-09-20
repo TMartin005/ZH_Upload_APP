@@ -4,7 +4,7 @@ Egy webalkalmazás hallgatói ZH-k (zh) feltöltésére és kezelésére, React 
 
 ## Funkciók
 
-- Hallgatói ZH-feltöltés ( kód (.c .cpp .py) és csv támogatás)
+- Hallgatói ZH-feltöltés ( kód (.c .cpp .py, .ipynb) és csv támogatás)
 - Tanári autentikáció és védett nézet
 - ZH-kezelés (hozzáadás, aktiválás, beadások megtekintése)
 - Fájl előnézet (kód és CSV)
@@ -80,7 +80,7 @@ A hallgatói oldalon a felhasználók a következőket tudják megtenni:
 - Név és Neptun kód megadása
 - Aktív ZH kiválasztása a listából
 - Nyilatkozatok elfogadása (saját kód, AI használat)
-- Programfájl feltöltése (.c, .cpp, .py)
+- Programfájl feltöltése (.c .cpp .py, .ipynb)
 - Opcionális CSV fájl feltöltése
 - Feltöltött fájlok előnézete (Megtekintés gombbal)
 - Beadás gombbal a fájlok beküldése
